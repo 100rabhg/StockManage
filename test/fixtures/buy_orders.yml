@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  supplier_id: one
+  price: 9.99
+  order_date: 2023-03-01 18:41:42
+  delivery_date: 2023-03-01 18:41:42
+  status: 1
+
+two:
+  supplier_id: two
+  price: 9.99
+  order_date: 2023-03-01 18:41:42
+  delivery_date: 2023-03-01 18:41:42
+  status: 1
