@@ -5,7 +5,7 @@ ActiveAdmin.register Supplier do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :name, :address, :comment, :phone_number
+  permit_params :name, :address, :comment, :phone_number
   #
   # or
   #

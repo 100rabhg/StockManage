@@ -5,7 +5,7 @@ ActiveAdmin.register BuyOrder do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :supplier_id, :price, :order_date, :delivery_date, :status
+  permit_params :supplier_id, :price, :order_date, :delivery_date, :status
   #
   # or
   #

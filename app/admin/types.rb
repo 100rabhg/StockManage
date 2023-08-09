@@ -5,7 +5,7 @@ ActiveAdmin.register Type do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :name, :capacity, :comment
+  permit_params :name, :capacity, :comment
   #
   # or
   #
