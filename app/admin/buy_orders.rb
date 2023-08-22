@@ -1,18 +1,29 @@
 ActiveAdmin.register BuyOrder do
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  permit_params :supplier_id, :price, :order_date, :delivery_date, :status
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:supplier_id, :price, :order_date, :delivery_date, :status]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  permit_params :supplier_id,
+                :price,
+                :order_date,
+                :delivery_date,
+                :status,
+                buy_order_items_attributes: [:id, :buy_order_id, :type_id, :quantity, :comment]
+
+  form do |f|
+    f.inputs 'Order Details' do
+      f.input :supplier_id, as: :select, collection: options_for_select(Supplier.all.map{|s|[s.name, s.id]})
+      f.input :price
+      f.input :order_date, as: :datepicker
+      f.input :delivery_date, as: :datepicker
+      f.input :status, as: :select, collection: (["in-process", "complete"])
+    end
+    f.inputs do
+      f.has_many :buy_order_items, heading: 'Order Item',
+                                   allow_destroy: true do |item|
+        item.input :type_id, as: :select, collection: options_for_select(Type.all.map{|t|[t.name, t.id]})
+        item.input :quantity
+        item.input :comment
+      end
+    end
+    actions
+  end
   
 end

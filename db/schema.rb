@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_01_131142) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_22_115203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_01_131142) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "buy_order_items", force: :cascade do |t|
+    t.bigint "buy_order_id", null: false
+    t.bigint "type_id", null: false
+    t.integer "quantity"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buy_order_id"], name: "index_buy_order_items_on_buy_order_id"
+    t.index ["type_id"], name: "index_buy_order_items_on_type_id"
+  end
+
   create_table "buy_orders", force: :cascade do |t|
     t.bigint "supplier_id", null: false
     t.decimal "price"
@@ -60,6 +71,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_01_131142) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "stocks", force: :cascade do |t|
+    t.bigint "buy_order_id", null: false
+    t.bigint "type_id", null: false
+    t.string "name"
+    t.string "comment"
+    t.integer "purchase_quantity"
+    t.integer "available_quantity"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buy_order_id"], name: "index_stocks_on_buy_order_id"
+    t.index ["type_id"], name: "index_stocks_on_type_id"
+  end
+
   create_table "suppliers", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -77,5 +102,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_01_131142) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "buy_order_items", "buy_orders"
+  add_foreign_key "buy_order_items", "types"
   add_foreign_key "buy_orders", "suppliers"
+  add_foreign_key "stocks", "buy_orders"
+  add_foreign_key "stocks", "types"
 end
