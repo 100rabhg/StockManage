@@ -9,11 +9,11 @@ ActiveAdmin.register BuyOrder do
 
   form do |f|
     f.inputs 'Order Details' do
-      f.input :supplier_id, as: :select, collection: options_for_select(Supplier.all.map{|s|[s.name, s.id]})
+      f.input :supplier_id, as: :select, collection: options_for_select(Supplier.all.map{|s|[s.name, s.id]}, selected: f.object.supplier_id)
       f.input :price
       f.input :order_date, as: :datepicker
       f.input :delivery_date, as: :datepicker
-      f.input :status, as: :select, collection: (["in-process", "complete"])
+      f.input :status, as: :select, collection: options_for_select(["in-process", "complete"], selected: f.object.status)
     end
     f.inputs do
       f.has_many :buy_order_items, heading: 'Order Item',
