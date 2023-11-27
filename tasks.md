@@ -5,12 +5,12 @@ other expense belongs to buy order
 buy order has many other expense
 other expense
 name
-price
+price #Done
 
-Buy Order price will be sum of all expenses
+Buy Order price will be sum of all expenses #Done
 
 Buy Order ---> buy_order_items (nested) # Done
-Buy Order ---> Edit/show page (supplier_id, status, boi)
+Buy Order ---> Edit/show page (supplier_id, status, boi) #Done
 
 Sell Order --->
 

@@ -2,10 +2,12 @@ ActiveAdmin.register BuyOrder do
 
   permit_params :supplier_id,
                 :price,
+                :total_price,
                 :order_date,
                 :delivery_date,
                 :status,
-                buy_order_items_attributes: [:id, :buy_order_id, :type_id, :quantity, :comment]
+                buy_order_items_attributes: [:id, :buy_order_id, :type_id, :quantity, :comment],
+                other_expenses_attributes: [:id, :name, :price]
 
   form do |f|
     f.inputs 'Order Details' do
@@ -18,12 +20,51 @@ ActiveAdmin.register BuyOrder do
     f.inputs do
       f.has_many :buy_order_items, heading: 'Order Item',
                                    allow_destroy: true do |item|
-        item.input :type_id, as: :select, collection: options_for_select(Type.all.map{|t|[t.name, t.id]})
+        item.input :type_id, as: :select, collection: options_for_select(Type.all.map{|t|[t.name, t.id]},  selected: item.object.type_id)
         item.input :quantity
         item.input :comment
       end
     end
+      f.inputs 'Other Expenses' do
+        f.has_many :other_expenses, heading: 'Other Charge',
+                                    allow_destroy: true do |item|
+        item.input :name
+        item.input :price
+        end
+      end
     actions
   end
+
+  show do
+    attributes_table do
+      row :supplier do |buy_order|
+        buy_order.supplier.name
+      end
+      row :price
+      row 'Total Price(price + other_expense)' do |buy_order|
+        number_to_currency(buy_order.total_price, unit: '₹')
+      end
+      row :order_date
+      row :delivery_date
+      row :status
+    end
   
+    panel 'Order Items' do
+      table_for buy_order.buy_order_items do
+        column 'Type' do |item|
+          item.type.name
+        end
+        column :quantity
+        column :comment
+      end
+    end
+  
+    panel 'Other Expenses' do
+      table_for buy_order.other_expenses do
+        column :name
+        column :price
+      end
+    end
+  end 
 end
+
