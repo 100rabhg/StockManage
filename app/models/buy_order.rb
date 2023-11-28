@@ -7,9 +7,15 @@ class BuyOrder < ApplicationRecord
   accepts_nested_attributes_for :other_expenses,  allow_destroy: true
   enum status: ['in-process', 'complete']
 
+  before_save :total_price
 
+  
   def total_price
-    price + other_expenses.sum(:price)
+    other_expense_total_price = 0
+    self.other_expenses.each do |p|
+      other_expense_total_price = p.price + other_expense_total_price
+    end
+    self.total_price = price + other_expense_total_price
   end
 
 end

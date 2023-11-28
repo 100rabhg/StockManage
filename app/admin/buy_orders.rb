@@ -35,6 +35,22 @@ ActiveAdmin.register BuyOrder do
     actions
   end
 
+  index do
+    selectable_column
+    id_column
+    column :supplier do |buy_order|
+      buy_order.supplier.name
+    end
+    column :price
+    column 'Total Price' do |buy_order|
+      number_to_currency(buy_order.total_price, unit: '₹')
+    end
+    column :order_date
+    column :delivery_date
+    column :status
+    actions
+  end
+
   show do
     attributes_table do
       row :supplier do |buy_order|
