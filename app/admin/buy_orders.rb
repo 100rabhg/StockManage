@@ -9,6 +9,7 @@ ActiveAdmin.register BuyOrder do
                 buy_order_items_attributes: [:id, :buy_order_id, :type_id, :quantity, :comment],
                 other_expenses_attributes: [:id, :name, :price]
 
+
   form do |f|
     f.inputs 'Order Details' do
       f.input :supplier_id, as: :select, collection: options_for_select(Supplier.all.map{|s|[s.name, s.id]}, selected: f.object.supplier_id)
@@ -34,6 +35,7 @@ ActiveAdmin.register BuyOrder do
       end
     actions
   end
+
 
   index do
     selectable_column

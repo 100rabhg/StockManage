@@ -8,6 +8,7 @@ class BuyOrder < ApplicationRecord
   enum status: ['in-process', 'complete']
 
   before_save :total_price
+  before_update :update_the_quantity
 
   
   def total_price
@@ -18,4 +19,15 @@ class BuyOrder < ApplicationRecord
     self.total_price = price + other_expense_total_price
   end
 
+  def update_the_quantity 
+    if status == 'complete'
+      type_ids = self.buy_order_items.pluck(:type_id)
+      quan = self.buy_order_items.pluck(:quantity)
+      type = Type.where(id: type_ids)
+      type.each_with_index do |i, t|
+        q = i.quantity + quan[t]
+        i.update(quantity: q)
+      end 
+    end 
+  end
 end

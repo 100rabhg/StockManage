@@ -4,8 +4,12 @@ ActiveAdmin.register SellOrder do
     sell_order_items_attributes: [:id, :sell_order_id, :type_id, :quantity, :price, :comment],
     other_sell_expenses_attributes: [:id, :name, :price]
 
-
+    
+    
+    
     form do |f|
+      f.semantic_errors
+
       f.inputs 'SellOrder Details' do
         f.input :shopkeeper_id, as: :select, collection: options_for_select(Shopkeeper.all.map{|s|[s.name, s.id]}, selected: f.object.shopkeeper_id)
         f.input :sell_date, as: :datepicker
