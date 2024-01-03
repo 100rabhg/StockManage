@@ -12,13 +12,28 @@ Buy Order price will be sum of all expenses #Done
 Buy Order ---> buy_order_items (nested) # Done
 Buy Order ---> Edit/show page (supplier_id, status, boi) #Done
 
-Sell Order --->
+Sell Order ---> #Done
 
-Dashboard show all quantity of types (stock)
-deduct total quantity ---> as damage
+Dashboard show all quantity of types (stock) #Done
+deduct total quantity ---> as damage #Done
 
 ===============
 paid amount and remaining amount (in shopkeer show page show orders amount details and add a paid button)
+
+create transaction table:
+relation with supplier and buy_order
+
+Show account in supplier column
+Able to create a new entry into transaction for a particular supplier
+
+Show supplier balance on supplier column
+add amount of new buy_order into supplier's balance and entry into transaction
+
+show balance of suppliers on dashboard
+
+==============
+
+Grouping of Header
 
 
 
