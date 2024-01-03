@@ -1,18 +1,36 @@
 ActiveAdmin.register Type do
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  permit_params :name, :capacity, :comment
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:name, :capacity, :comment]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+  permit_params :name, :capacity, :comment, :quantity, :damage
+
+  form do |f|
+    f.inputs 'Type Details' do
+      f.input :name
+      f.input :capacity
+      f.input :comment
+      f.input :damage
+    end
+    actions
+  end
+
+  index do
+    selectable_column
+    id_column
+    column :name 
+    column :capacity 
+    column :comment 
+    column  'Available quantity', :quantity 
+    column 'Damage Quantity', :damage
+    actions
+  end
+
+  show do 
+    attributes_table do
+      row :name
+      row :capacity 
+      row :comment 
+      row :quantity 
+      row :damage
+    end
+  end
   
 end
