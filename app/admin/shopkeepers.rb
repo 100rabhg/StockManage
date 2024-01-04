@@ -14,6 +14,22 @@ ActiveAdmin.register Shopkeeper do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+
+  index do
+    selectable_column
+    id_column
+    column :name
+    column :address
+    column :phone_number
+    column 'Balance' do |shopkeeper|
+      number_to_currency(shopkeeper.balance, unit: '₹')
+    end
+    column :comment
+    column :updated_at
+    actions
+  end
+
+
   show do
     attributes_table do
       row :name
