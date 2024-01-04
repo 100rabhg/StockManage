@@ -2,6 +2,8 @@ ActiveAdmin.register ShopkeeperTranction do
 
   permit_params :shopkeeper_id, :credit_amount, :tranction_date
 
+  menu parent: 'Shopkeeper', priority: 2
+
   form do |f|
     f.inputs do
       f.input :shopkeeper_id, as: :select, collection: options_for_select(Shopkeeper.all.map{|s|[s.name, s.id]}, selected: f.object.shopkeeper_id)

@@ -9,6 +9,7 @@ ActiveAdmin.register BuyOrder do
                 buy_order_items_attributes: [:id, :buy_order_id, :type_id, :quantity, :comment, :_destroy],
                 other_expenses_attributes: [:id, :name, :price, :_destroy]
 
+  menu parent: 'Supplier', priority: 3
 
   form do |f|
     f.inputs 'Order Details' do

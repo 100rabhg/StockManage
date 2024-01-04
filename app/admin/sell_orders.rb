@@ -4,8 +4,7 @@ ActiveAdmin.register SellOrder do
     sell_order_items_attributes: [:id, :sell_order_id, :type_id, :quantity, :price, :comment, :_destroy],
     other_sell_expenses_attributes: [:id, :name, :price, :_destroy]
 
-    
-    
+    menu parent: 'Shopkeeper', priority: 3
     
     form do |f|
       f.semantic_errors

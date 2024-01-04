@@ -15,6 +15,8 @@ ActiveAdmin.register Supplier do
   #   permitted
   # end
 
+  menu parent: 'Supplier', priority: 1
+
   index do
     selectable_column
     id_column

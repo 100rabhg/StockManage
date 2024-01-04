@@ -2,6 +2,8 @@ ActiveAdmin.register SupplierTranction do
 
   permit_params :supplier_id, :debit_amount, :tranction_date
   
+  menu parent: 'Supplier', priority: 2
+
   form do |f|
     f.inputs do
       f.input :supplier_id, as: :select, collection: options_for_select(Supplier.all.map{|s|[s.name, s.id]}, selected: f.object.supplier_id)

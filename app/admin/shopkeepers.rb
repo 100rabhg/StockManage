@@ -6,6 +6,7 @@ ActiveAdmin.register Shopkeeper do
   # Uncomment all parameters which should be permitted for assignment
   #
   permit_params :name, :address, :phone_number, :comment
+  menu parent: 'Shopkeeper', priority: 1
   #
   # or
   #
