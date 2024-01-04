@@ -62,4 +62,8 @@ ActiveAdmin.register Supplier do
       end
     end
   end
+
+  action_item :pay, only: :show do
+    link_to 'Pay', "/admin/supplier_tranctions/new?id=#{supplier.id}"
+  end
 end

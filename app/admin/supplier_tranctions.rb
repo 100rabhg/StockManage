@@ -44,4 +44,11 @@ ActiveAdmin.register SupplierTranction do
       row :tranction_date
     end
   end
+
+  controller do
+    def new
+      @supplier_tranction = SupplierTranction.new(supplier_id: params[:id])
+      super
+    end 
+  end
 end

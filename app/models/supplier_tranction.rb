@@ -9,10 +9,12 @@ class SupplierTranction < ApplicationRecord
   belongs_to :buy_order, optional: true
 
   before_validation :validate_tranction
+  validates :tranction_date, presence: true
+  validates :supplier_id, presence: true
 
   def validate_tranction
     if self.buy_order.nil? && (self.debit_amount.nil? || self.debit_amount.zero?)
-      errors.add(:tranction, 'invalid !')
+      errors.add(:debit_amount, "can't be blank")
     end
   end
 end

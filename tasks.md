@@ -18,7 +18,7 @@ Dashboard show all quantity of types (stock) #Done
 deduct total quantity ---> as damage #Done
 
 ===============
-paid amount and remaining amount (in shopkeer show page show orders amount details and add a paid button) 
+paid amount and remaining amount (in shopkeer show page show orders amount details and add a paid button) #Done
 
 create transaction table: #Done
 relation with supplier and buy_order #Done
@@ -33,8 +33,6 @@ show balance of suppliers on dashboard #Done
 ==============
 
 Grouping of Header
-
-
 
 print Invoice
 

@@ -44,4 +44,11 @@ ActiveAdmin.register ShopkeeperTranction do
       row :tranction_date
     end
   end
+
+  controller do
+    def new
+      @shopkeeper_tranction = ShopkeeperTranction.new(shopkeeper_id: params[:id])
+      super
+    end 
+  end
 end

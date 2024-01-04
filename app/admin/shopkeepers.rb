@@ -63,4 +63,7 @@ ActiveAdmin.register Shopkeeper do
       end
     end
   end
+  action_item :pay, only: :show do
+    link_to 'Get Payed', "/admin/shopkeeper_tranctions/new?id=#{shopkeeper.id}"
+  end
 end
