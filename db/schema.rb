@@ -113,8 +113,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_04_062248) do
   end
 
   create_table "supplier_tranctions", force: :cascade do |t|
-    t.bigint "supplier_id", null: false
-    t.bigint "buy_order_id", null: false
+    t.bigint "supplier_id"
+    t.bigint "buy_order_id"
     t.decimal "debit_amount"
     t.datetime "tranction_date"
     t.datetime "created_at", null: false

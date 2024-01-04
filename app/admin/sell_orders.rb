@@ -1,8 +1,8 @@
 ActiveAdmin.register SellOrder do
 
    permit_params :price,:total_price, :sell_date, :shopkeeper_id,
-    sell_order_items_attributes: [:id, :sell_order_id, :type_id, :quantity, :price, :comment],
-    other_sell_expenses_attributes: [:id, :name, :price]
+    sell_order_items_attributes: [:id, :sell_order_id, :type_id, :quantity, :price, :comment, :_destroy],
+    other_sell_expenses_attributes: [:id, :name, :price, :_destroy]
 
     
     
@@ -79,7 +79,9 @@ ActiveAdmin.register SellOrder do
       panel 'Other Sell Expenses' do
         table_for sell_order.other_sell_expenses do
           column :name
-          column :price
+          column :price do |other_expense|
+            number_to_currency(other_expense.price, unit: '₹')
+          end
         end
       end
     end

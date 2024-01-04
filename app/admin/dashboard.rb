@@ -20,9 +20,28 @@ ActiveAdmin.register_page "Dashboard" do
 
           end
         end
+
+        panel 'Supplier Balances' do
+          total_balance = 0 
+          table_for Supplier.all.order(:id).includes(:supplier_tranctions) do
+            column :id
+            column  :name
+            column  'Balance Amount' do |supplier|
+              balance = supplier.balance
+              total_balance += balance
+              number_to_currency(balance, unit: '₹')
+            end
+          end
+          columns class: 'float_right bold' do
+            column do
+              span number_to_currency(total_balance, unit: '₹')
+            end
+            column do
+              span 'Total Balance'
+            end
+          end
+        end
       end
-
-
     end
 
     # Here is an example of a simple dashboard with columns and panels.

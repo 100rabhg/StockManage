@@ -6,8 +6,8 @@ ActiveAdmin.register BuyOrder do
                 :order_date,
                 :delivery_date,
                 :status,
-                buy_order_items_attributes: [:id, :buy_order_id, :type_id, :quantity, :comment],
-                other_expenses_attributes: [:id, :name, :price]
+                buy_order_items_attributes: [:id, :buy_order_id, :type_id, :quantity, :comment, :_destroy],
+                other_expenses_attributes: [:id, :name, :price, :_destroy]
 
 
   form do |f|
@@ -43,7 +43,9 @@ ActiveAdmin.register BuyOrder do
     column :supplier do |buy_order|
       buy_order.supplier.name
     end
-    column :price
+    column :price do |buy_order|
+      number_to_currency(buy_order.price, unit: '₹')
+    end
     column 'Total Price' do |buy_order|
       number_to_currency(buy_order.total_price, unit: '₹')
     end
@@ -58,7 +60,9 @@ ActiveAdmin.register BuyOrder do
       row :supplier do |buy_order|
         buy_order.supplier.name
       end
-      row :price
+      row :price do |buy_order|
+        number_to_currency(buy_order.price, unit: '₹')
+      end
       row 'Total Price(price + other_expense)' do |buy_order|
         number_to_currency(buy_order.total_price, unit: '₹')
       end
@@ -80,9 +84,11 @@ ActiveAdmin.register BuyOrder do
     panel 'Other Expenses' do
       table_for buy_order.other_expenses do
         column :name
-        column :price
+        column :price do |other_expense|
+          number_to_currency(other_expense.price, unit: '₹')
+        end
       end
     end
-  end 
+  end
 end
 

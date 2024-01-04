@@ -27,25 +27,19 @@ ActiveAdmin.register Supplier do
     panel 'Tranctions' do
       table_for supplier.supplier_tranctions do
         column 'Credit Amount' do |tranction|
-          tranction.buy_order ? tranction.buy_order.total_price : '-'
+          number_to_currency(tranction.buy_order&.total_price, unit: '₹')
         end
         column 'Credit Buy Order' do |tranction|
           tranction.buy_order
         end
-        column :debit_amount
+        column :debit_amount do |tranction|
+          number_to_currency(tranction.debit_amount, unit: '₹')
+        end
         column :tranction_date
       end
       columns class: 'float_right bold' do
         column do
-          balance = 0
-          supplier.supplier_tranctions.each do |tranction|
-            if tranction.buy_order.present?
-                balance += tranction.buy_order.total_price
-            else
-              balance -= tranction.debit_amount
-            end
-          end
-          span "\u20B9#{balance}"
+          span number_to_currency(supplier.balance, unit: '₹')
         end
         column do
           span 'Balance'

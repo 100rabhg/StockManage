@@ -16,6 +16,14 @@ class BuyOrder < ApplicationRecord
   accepts_nested_attributes_for :other_expenses,  allow_destroy: true
   enum status: ['in-process', 'complete']
 
+  validate :not_update_to_in_process_after_complete,
+
+  def not_update_to_in_process_after_complete
+    if status_was == 'complete' && (status == 'in-process' || status.nil?)
+      errors.add(:status, "can't update to in-process and empty after compelete")
+    end
+  end
+
   before_save :total_price
   before_create :add_quantity_in_inventry, if: :status_is_complete?
   after_update :create_tranction, if: :status_is_complete?
@@ -26,7 +34,7 @@ class BuyOrder < ApplicationRecord
   end
 
   def create_tranction
-    if previous_changes['status'].present?
+    if self.supplier_tranction.nil?
       self.supplier_tranction= SupplierTranction.new(supplier: self.supplier, tranction_date: self.delivery_date)
     end
   end
