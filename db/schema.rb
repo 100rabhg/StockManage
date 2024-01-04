@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_115203) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_04_062248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,7 +59,48 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_115203) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "total_price"
     t.index ["supplier_id"], name: "index_buy_orders_on_supplier_id"
+  end
+
+  create_table "other_expenses", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price"
+    t.bigint "buy_order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buy_order_id"], name: "index_other_expenses_on_buy_order_id"
+  end
+
+  create_table "other_sell_expenses", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price"
+    t.bigint "sell_order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sell_order_id"], name: "index_other_sell_expenses_on_sell_order_id"
+  end
+
+  create_table "sell_order_items", force: :cascade do |t|
+    t.bigint "sell_order_id", null: false
+    t.bigint "type_id", null: false
+    t.integer "quantity"
+    t.decimal "price"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sell_order_id"], name: "index_sell_order_items_on_sell_order_id"
+    t.index ["type_id"], name: "index_sell_order_items_on_type_id"
+  end
+
+  create_table "sell_orders", force: :cascade do |t|
+    t.bigint "shopkeeper_id", null: false
+    t.decimal "total_price"
+    t.datetime "sell_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "price"
+    t.index ["shopkeeper_id"], name: "index_sell_orders_on_shopkeeper_id"
   end
 
   create_table "shopkeepers", force: :cascade do |t|
@@ -71,18 +112,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_115203) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "stocks", force: :cascade do |t|
+  create_table "supplier_tranctions", force: :cascade do |t|
+    t.bigint "supplier_id", null: false
     t.bigint "buy_order_id", null: false
-    t.bigint "type_id", null: false
-    t.string "name"
-    t.string "comment"
-    t.integer "purchase_quantity"
-    t.integer "available_quantity"
-    t.decimal "price"
+    t.decimal "debit_amount"
+    t.datetime "tranction_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["buy_order_id"], name: "index_stocks_on_buy_order_id"
-    t.index ["type_id"], name: "index_stocks_on_type_id"
+    t.index ["buy_order_id"], name: "index_supplier_tranctions_on_buy_order_id"
+    t.index ["supplier_id"], name: "index_supplier_tranctions_on_supplier_id"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -100,11 +138,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_115203) do
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quantity", default: 0
+    t.integer "damage", default: 0
   end
 
   add_foreign_key "buy_order_items", "buy_orders"
   add_foreign_key "buy_order_items", "types"
   add_foreign_key "buy_orders", "suppliers"
-  add_foreign_key "stocks", "buy_orders"
-  add_foreign_key "stocks", "types"
+  add_foreign_key "other_expenses", "buy_orders"
+  add_foreign_key "other_sell_expenses", "sell_orders"
+  add_foreign_key "sell_order_items", "sell_orders"
+  add_foreign_key "sell_order_items", "types"
+  add_foreign_key "sell_orders", "shopkeepers"
+  add_foreign_key "supplier_tranctions", "buy_orders"
+  add_foreign_key "supplier_tranctions", "suppliers"
 end
