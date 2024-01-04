@@ -41,6 +41,27 @@ ActiveAdmin.register_page "Dashboard" do
             end
           end
         end
+
+        panel 'Shopkeeper Balances' do
+          total_balance = 0
+          table_for Shopkeeper.all.order(:id).includes(:shopkeeper_tranctions) do
+            column :id
+            column  :name
+            column  'Balance Amount' do |shopkeeper|
+              balance = shopkeeper.balance
+              total_balance += balance
+              number_to_currency(balance, unit: '₹')
+            end
+          end
+          columns class: 'float_right bold' do
+            column do
+              span number_to_currency(total_balance, unit: '₹')
+            end
+            column do
+              span 'Total Balance'
+            end
+          end
+        end
       end
     end
 

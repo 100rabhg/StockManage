@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_04_062248) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_04_114009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -103,6 +103,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_04_062248) do
     t.index ["shopkeeper_id"], name: "index_sell_orders_on_shopkeeper_id"
   end
 
+  create_table "shopkeeper_tranctions", force: :cascade do |t|
+    t.bigint "shopkeeper_id"
+    t.bigint "sell_order_id"
+    t.decimal "credit_amount"
+    t.datetime "tranction_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sell_order_id"], name: "index_shopkeeper_tranctions_on_sell_order_id"
+    t.index ["shopkeeper_id"], name: "index_shopkeeper_tranctions_on_shopkeeper_id"
+  end
+
   create_table "shopkeepers", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -150,6 +161,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_04_062248) do
   add_foreign_key "sell_order_items", "sell_orders"
   add_foreign_key "sell_order_items", "types"
   add_foreign_key "sell_orders", "shopkeepers"
+  add_foreign_key "shopkeeper_tranctions", "sell_orders"
+  add_foreign_key "shopkeeper_tranctions", "shopkeepers"
   add_foreign_key "supplier_tranctions", "buy_orders"
   add_foreign_key "supplier_tranctions", "suppliers"
 end

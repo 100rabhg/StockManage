@@ -14,5 +14,37 @@ ActiveAdmin.register Shopkeeper do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+  show do
+    attributes_table do
+      row :name
+      row :address
+      row :phone_number
+      row :comment
+      row :created_at
+      row :updated_at
+    end
+
+    panel 'Tranctions' do
+      table_for shopkeeper.shopkeeper_tranctions do
+        column 'Debit Amount' do |tranction|
+          number_to_currency(tranction.sell_order&.total_price, unit: '₹')
+        end
+        column 'Debit Sell Order' do |tranction|
+          tranction.sell_order
+        end
+        column :credit_amount do |tranction|
+          number_to_currency(tranction.credit_amount, unit: '₹')
+        end
+        column :tranction_date
+      end
+      columns class: 'float_right bold' do
+        column do
+          span number_to_currency(shopkeeper.balance, unit: '₹')
+        end
+        column do
+          span 'Balance'
+        end
+      end
+    end
+  end
 end
