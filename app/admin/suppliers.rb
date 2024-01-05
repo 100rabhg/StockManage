@@ -66,6 +66,26 @@ ActiveAdmin.register Supplier do
   end
 
   action_item :pay, only: :show do
-    link_to 'Pay', "/admin/supplier_tranctions/new?id=#{supplier.id}"
+    unless supplier.buy_orders.count.zero?
+      link_to 'Download Invoice', download_invoice_admin_supplier_path(supplier, format: :pdf)
+    end
+  end
+  action_item :pay, only: :show do
+    unless supplier.buy_orders.count.zero?
+      link_to 'Pay', "/admin/supplier_tranctions/new?id=#{supplier.id}"
+    end
+  end
+
+  member_action :download_invoice, method: :get do
+    supplier = Supplier.find(params[:id])
+    pdf_service = PdfGeneratorService.new
+    pdf_content = pdf_service.generate_pdf(supplier)
+    pdf_filename = "#{supplier.name}_invoice_#{Date.today.strftime('%d_%b_%y')}.pdf"
+
+    respond_to do |format|
+      format.pdf do
+        send_data pdf_content, filename: pdf_filename, type: 'application/pdf', disposition: 'attachment'
+      end
+    end
   end
 end

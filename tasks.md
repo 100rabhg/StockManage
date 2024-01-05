@@ -34,7 +34,7 @@ show balance of suppliers on dashboard #Done
 
 Grouping of Header #Done
 
-print Invoice
+print Invoice #Done
 
 /Users/developer/Documents/rails_projects/StockManage/db/seeds.rb
 

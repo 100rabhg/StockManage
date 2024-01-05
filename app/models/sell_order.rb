@@ -19,7 +19,7 @@ class SellOrder < ApplicationRecord
 
   after_create :remove_quantity_in_inventry
   before_update :sell_update_quantity
-  after_update :create_tranction
+  after_save :create_tranction
    
   def create_tranction
     if self.shopkeeper_tranction.nil?
@@ -73,15 +73,10 @@ class SellOrder < ApplicationRecord
   end
 
   def remove_quantity_in_inventry
-    type_ids = self.sell_order_items.pluck(:type_id)
-    quan = self.sell_order_items.pluck(:quantity)
-    type = Type.where(id: type_ids)
-    type.each_with_index do |i, t|
-      q = i.quantity - quan[t] 
-      i.update(quantity: q)
-      
+    self.sell_order_items.each do |sell_order_item|
+      quan = sell_order_item.quantity
+      type = sell_order_item.type
+      type.update(quantity: type.quantity - quan)
     end
-    
   end
-
 end

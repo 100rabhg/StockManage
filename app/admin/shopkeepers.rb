@@ -65,6 +65,26 @@ ActiveAdmin.register Shopkeeper do
     end
   end
   action_item :pay, only: :show do
-    link_to 'Get Payed', "/admin/shopkeeper_tranctions/new?id=#{shopkeeper.id}"
+    unless shopkeeper.sell_orders.count.zero?
+      link_to 'Download Invoice', download_invoice_admin_shopkeeper_path(shopkeeper, format: :pdf)
+    end
+  end
+  action_item :pay, only: :show do
+    unless shopkeeper.sell_orders.count.zero?
+      link_to 'Get Payed', "/admin/shopkeeper_tranctions/new?id=#{shopkeeper.id}"
+    end
+  end
+  
+  member_action :download_invoice, method: :get do
+    shopkeeper = Shopkeeper.find(params[:id])
+    pdf_service = PdfGeneratorService.new
+    pdf_content = pdf_service.generate_pdf(shopkeeper)
+    pdf_filename = "#{shopkeeper.name}_invoice_#{Date.today.strftime('%d_%b_%y')}.pdf"
+
+    respond_to do |format|
+      format.pdf do
+        send_data pdf_content, filename: pdf_filename, type: 'application/pdf', disposition: 'attachment'
+      end
+    end
   end
 end

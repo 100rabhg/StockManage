@@ -26,7 +26,7 @@ class BuyOrder < ApplicationRecord
 
   before_save :total_price
   before_create :add_quantity_in_inventry, if: :status_is_complete?
-  after_update :create_tranction, if: :status_is_complete?
+  after_save :create_tranction, if: :status_is_complete?
   before_update :update_the_quantity, if: :status_is_complete?
 
   def status_is_complete?
@@ -61,12 +61,10 @@ class BuyOrder < ApplicationRecord
   end
 
   def add_quantity_in_inventry
-    type_ids = self.buy_order_items.pluck(:type_id)
-    quan = self.buy_order_items.pluck(:quantity)
-    type = Type.where(id: type_ids)
-    type.each_with_index do |i, t|
-      q = i.quantity + quan[t]
-      i.update(quantity: q)
+    self.buy_order_items.each do |buy_order_item|
+      quan = buy_order_item.quantity
+      type = buy_order_item.type
+      type.update(quantity: type.quantity + quan)
     end
   end
 end
