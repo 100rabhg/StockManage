@@ -59,6 +59,8 @@ gem 'sassc-rails'
 # gem to generate pdf
 gem "prawn"
 gem "prawn-table"
+# gem for sms
+gem 'twilio-ruby'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

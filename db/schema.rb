@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_04_114009) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_08_101250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -103,6 +103,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_04_114009) do
     t.index ["shopkeeper_id"], name: "index_sell_orders_on_shopkeeper_id"
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.boolean "shopkeeper_dues_auto_reminder", default: false
+    t.integer "reminder_send_time"
+    t.integer "again_reminder_send_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "shopkeeper_tranctions", force: :cascade do |t|
     t.bigint "shopkeeper_id"
     t.bigint "sell_order_id"
@@ -121,6 +129,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_04_114009) do
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "dues_reminder_send_at"
   end
 
   create_table "supplier_tranctions", force: :cascade do |t|
