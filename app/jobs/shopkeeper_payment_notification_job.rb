@@ -14,10 +14,15 @@ class ShopkeeperPaymentNotificationJob < ApplicationJob
 
     end
     # next day check again
-    ShopkeeperPaymentNotificationJob.set(wait: 1.day).perform_later(true) if Setting.first.shopkeeper_dues_auto_reminder && auto
+    Resque.enqueue_at_with_queue(
+      'shopkeeper_dues_reminder',
+      1.day,
+      ShopkeeperPaymentNotificationJob,
+      true
+    ) if Setting.first.shopkeeper_dues_auto_reminder && auto
   end
 
   def send_reminder_notification_to_shopkeeper(shopkeeper)
-    ShopkeeperSmsJob.perform_later(shopkeeper)
+    ShopkeeperSmsJob.perform_now(shopkeeper)
   end
 end

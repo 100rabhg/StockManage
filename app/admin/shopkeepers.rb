@@ -109,13 +109,13 @@ ActiveAdmin.register Shopkeeper do
   end
 
   member_action :dues_reminder, method: :put do
-    ShopkeeperSmsJob.perform_later(resource)
+    ShopkeeperSmsJob.perform_now(resource)
     redirect_to admin_shopkeeper_path, notice: "Send Reminder notification soon"
 
   end
 
   collection_action :dues_reminder_all, method: :put do
-    ShopkeeperPaymentNotificationJob.perform_later()
+    ShopkeeperPaymentNotificationJob.perform_now()
     redirect_to collection_path, notice: "Send Reminder notification soon"
   end
 end

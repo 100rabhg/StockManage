@@ -10,7 +10,9 @@ class Setting < ApplicationRecord
 
   def on_auto_reminder_notification
     if shopkeeper_dues_auto_reminder
-      ShopkeeperPaymentNotificationJob.perform_later(true)
+      Resque.enqueue_at_with_queue('shopkeeper_dues_reminder', 1.day, ShopkeeperPaymentNotificationJob, true)
+    else
+      Resque::Job.destroy('shopkeeper_dues_reminder', 'ShopkeeperPaymentNotificationJob')
     end
   end
 
