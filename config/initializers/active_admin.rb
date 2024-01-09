@@ -332,4 +332,9 @@ ActiveAdmin.setup do |config|
   # You can switch to using Webpacker here.
   #
   # config.use_webpacker = true
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: "Settings", url: "/admin/settings/#{Setting.first&.id}", priority: 100
+    end
+  end
 end
