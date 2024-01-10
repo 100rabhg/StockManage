@@ -82,5 +82,7 @@ test:
 production:
   <<: *default
   database: stock_manage_production
-  username: stock_manage
-  password: <%= ENV["STOCK_MANAGE_DATABASE_PASSWORD"] %>
+  username: ubuntu
+  password: ']WFrQ{0QWDl3>y_f.?Rv(0c9FASk'
+  host: database-production.c54kw48qyjyx.us-east-1.rds.amazonaws.com
+  port: 5432
