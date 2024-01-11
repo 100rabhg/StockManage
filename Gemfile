@@ -73,7 +73,10 @@ group :development, :test do
   gem 'capistrano3-puma'
   gem 'capistrano-rails', require: false
   gem 'capistrano-bundler', require: false
-  gem 'capistrano-rvm'
+  gem 'capistrano-rbenv'
+  gem 'net-ssh', '~> 7.2', '>= 7.2.1'
+  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+  gem 'rsa'
 end
 
 group :development do
