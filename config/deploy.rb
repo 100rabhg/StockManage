@@ -9,6 +9,8 @@ set :use_sudo, true
 set :deploy_to, '/home/ubuntu/StockManage'
 set :pty, true
 
+set :bundle_jobs, 2
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
