@@ -62,7 +62,9 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "pkill -9 ruby"
+      execute "cd"
+      execute "cd StockManage/current"
+      execute "kill -INT $(cat tmp/pids/server.pid)"
       execute "rails s -e production -d"
     end
   end
