@@ -63,7 +63,7 @@ namespace :deploy do
   task :restart do
     on roles(:app) do
       within release_path do
-        execute "ruby $HOME/StockManage/start_server.rb #{ fetch(:rails_env) } #{ '-d' }"
+        execute "ruby $HOME/StockManage/current/start_server.rb #{ fetch(:rails_env) }"
       end
     end
   end
