@@ -4,4 +4,8 @@ unless stdout_str.empty?
     puts 'Server Stoped'
 end
 puts %x( pwd )
-puts %x( rails s -e production -d )
+unless ARGV.empty?
+    puts %x( rails s -e #{ ARGV[0] } #{ (ARGV.count > 1) ? ARGV[1] : '' }  )
+else
+    puts 'running environment missing'
+end
