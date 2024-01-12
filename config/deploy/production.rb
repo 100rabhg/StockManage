@@ -23,7 +23,7 @@
 
 set :rails_env, 'production'
 set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
-server 'ec2-54-159-197-53.compute-1.amazonaws.com', user: 'ubuntu', roles: %w{web app db}
+server 'ec2-54-167-128-111.compute-1.amazonaws.com', user: 'ubuntu', roles: %w{web app db}
 
 
 # Configuration
