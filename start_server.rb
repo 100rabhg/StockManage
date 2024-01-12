@@ -5,8 +5,7 @@ unless stdout_str.empty?
 end
 
 unless ARGV.empty?
-    system( 'cd $HOME/StockManage/current' )
-    puts %x( rails s -e #{ ARGV[0] } -d )
+    puts %x( cd $HOME/StockManage; rails s -e #{ ARGV[0] } -d )
 else
-    puts 'running environment missing'
+    puts 'Running Environment Missing'
 end
