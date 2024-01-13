@@ -17,7 +17,7 @@ ActiveAdmin.register Setting do
   menu false
 
   permit_params :shopkeeper_dues_auto_reminder, :reminder_send_time, :again_reminder_send_time
-  actions :index, :edit, :show, :update
+  actions :edit, :show, :update
 
   show do
     attributes_table do
