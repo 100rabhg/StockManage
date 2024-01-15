@@ -4,7 +4,7 @@ class Shopkeeper < ApplicationRecord
 
   validates :phone_number, presence: true, 
                           numericality: true,
-                          length: { minimum: 10, maximum: 15 }
+                          length: { is: 10 }
 
   def balance
     balance = 0
@@ -25,5 +25,9 @@ class Shopkeeper < ApplicationRecord
     else
       sell_orders.order(sell_date: :desc).first.sell_date <= Date.today - time
     end
+  end
+
+  def phone_number_with_country_code
+    return '+91' + phone_number
   end
 end

@@ -82,7 +82,7 @@ test:
 production:
   <<: *default
   database: stock_manage_production
-  username: ubuntu
-  password: ']WFrQ{0QWDl3>y_f.?Rv(0c9FASk'
-  host: database-production.c54kw48qyjyx.us-east-1.rds.amazonaws.com
+  host: <%= Rails.application.credentials.dig(:database, :hostname) %>
   port: 5432
+  username: <%= Rails.application.credentials.dig(:database, :username) %>
+  password: <% Rails.application.credentials.dig(:database, :password) %>
