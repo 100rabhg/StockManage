@@ -4,7 +4,7 @@ class Shopkeeper < ApplicationRecord
 
   validates :phone_number, presence: true, 
                           numericality: true,
-                          length: { minimum: 10, maximum: 15 }
+                          length: { is: 10 }
 
   def balance
     balance = 0
