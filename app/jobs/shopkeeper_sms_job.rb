@@ -13,7 +13,7 @@ class ShopkeeperSmsJob < ApplicationJob
 
     message = client.messages.create(
       from: sender_number,
-      to: shopkeeper.phone_number,
+      to: shopkeeper.phone_number_with_country_code,
       body: "Dear #{shopkeeper.name},\n
       Just a quick reminder that your payment of #{ActionController::Base.helpers.number_to_currency(shopkeeper.balance, unit: '₹')} is due. Please make a payment to clear your dues. Thank you!\n
       \n
