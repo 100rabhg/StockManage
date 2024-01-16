@@ -20,6 +20,7 @@ require 'capistrano/bundler'
 require 'capistrano/rbenv'
 require 'capistrano/rails/assets' # for asset handling add
 require 'capistrano/rails/migrations' # for running migrations
+require "capistrano/passenger"
 
 # Include tasks from other gems included in your Gemfile
 #

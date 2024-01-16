@@ -80,6 +80,7 @@ group :development, :test do
   gem 'capistrano3-puma'
   gem 'capistrano-rails', require: false
   gem 'capistrano-bundler', require: false
+  gem 'capistrano-passenger', '>= 0.1.1'
   gem 'capistrano-rbenv'
 end
 

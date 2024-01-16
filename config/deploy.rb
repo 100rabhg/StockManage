@@ -12,6 +12,7 @@ set :pty, true
 set :bundle_jobs, 2
 set :rbenv_ruby, '3.2.2'
 set :deploy_via, :remote_cache
+set :passenger_restart_with_touch, true
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
