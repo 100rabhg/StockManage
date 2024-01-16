@@ -10,7 +10,7 @@ set :deploy_to, '/home/ubuntu/StockManage'
 set :pty, true
 
 set :bundle_jobs, 2
-set :rbenv_ruby, '3.0.0'
+set :rbenv_ruby, '3.2.2'
 set :deploy_via, :remote_cache
 
 # Default branch is :master
@@ -63,7 +63,8 @@ namespace :deploy do
   task :restart do
     on roles(:app) do
       within release_path do
-        execute "exit; ruby $HOME/StockManage/current/start_server.rb #{ fetch(:rails_env) }"
+        execute "whoami"
+        execute "ruby $HOME/StockManage/current/start_server.rb #{ fetch(:rails_env) }"
       end
     end
   end
