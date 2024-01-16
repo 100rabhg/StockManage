@@ -23,8 +23,10 @@
 
 set :rails_env, 'production'
 set :puma_env, fetch(:rack_env, fetch(:rails_env, 'production'))
+# StockManage-1
 server 'ec2-54-167-128-111.compute-1.amazonaws.com', user: 'ubuntu', roles: %w{web app db}
-
+# StockManage-2
+server 'ec2-184-73-87-87.compute-1.amazonaws.com', user: 'ubuntu', roles: %w{web app db}
 
 # Configuration
 # =============

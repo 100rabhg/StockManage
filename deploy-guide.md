@@ -114,6 +114,7 @@ change file with this
 
         passenger_enabled on;
         passenger_ruby <path-output-from-previous-command>;
+        passenger_preload_bundler on;
     }
 
 Now run this command 
