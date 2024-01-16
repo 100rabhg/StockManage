@@ -77,7 +77,6 @@ group :development, :test do
   gem 'byebug'
   gem "letter_opener"
   gem 'capistrano'
-  gem 'capistrano3-puma'
   gem 'capistrano-rails', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-passenger', '>= 0.1.1'

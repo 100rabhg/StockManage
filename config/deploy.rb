@@ -47,30 +47,3 @@ set :keep_releases, 2
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
-
-namespace :deploy do
-  desc "Make sure local git is in sync with remote."
-  task :check_revision do
-    on roles(:app) do
-      unless `git rev-parse HEAD` == `git rev-parse 100rabhg/master`
-        puts "WARNING: HEAD is not the same as 100rabhg/master"
-        puts "Run `git push` to sync changes."
-        exit
-      end
-    end
-  end
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app) do
-      within release_path do
-        execute "exit; ruby $HOME/StockManage/current/start_server.rb #{ fetch(:rails_env) }"
-      end
-    end
-  end
-
-  before :starting,     :check_revision
-  after  :finishing,    :compile_assets
-  after  :finishing,    :cleanup
-  after  :finishing,    :restart
-end
