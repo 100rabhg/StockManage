@@ -10,6 +10,7 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 // Overriding any non-variable Sass must be done after the fact.
 // For example, to change the default status-tag color:
@@ -24,4 +25,11 @@
 .bold{
   font-weight: bold;
   font-size: small;
+}
+.float-inline{
+  float: inline-start;
+}
+img {
+  max-width: 100px;
+  max-height: 100px;
 }

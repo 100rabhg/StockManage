@@ -1,5 +1,5 @@
 ActiveAdmin.register AdminUser do
-  permit_params :email, :admin_user_type
+  permit_params :email, :admin_user_type, :profile_photo
 
   index do
     selectable_column
@@ -27,6 +27,8 @@ ActiveAdmin.register AdminUser do
     f.inputs do
       f.input :email
       f.input :admin_user_type
+      f.input :profile_photo, as: :file, input_html: {accept: "image/*"}
+      render('shared/profile_photo', f: f)
     end
     f.actions
   end

@@ -6,4 +6,7 @@ class AdminUser < ApplicationRecord
 
   enum admin_user_type: ['super admin', 'admin', 'manager']
 
+  validates :admin_user_type, presence: true
+
+  has_one_attached :profile_photo
 end

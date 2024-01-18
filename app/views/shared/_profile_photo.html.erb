@@ -1,0 +1,39 @@
+<li class="input">
+<p class="inline-hints">
+<%if f.object.profile_photo.attached?%>
+  <img class="float-inline" id="uploaded" src="<%=rails_blob_url(f.object.profile_photo.variant(resize_to_limit: [100, 100]), host: request.host)%>">
+  <i class="material-icons" id="delete-profile">delete</i>
+<%else%>
+  <span id="uploaded" >no profile image yet</span>
+  <i class="material-icons" id="delete-profile" style="display: none;">delete</i>
+<%end%>
+<img class="float-inline" id="preview">
+</p>
+</li>
+
+<%= javascript_tag do %>
+$(document).ready(function(){
+    $('#admin_user_profile_photo').on('change', function(e){
+        const file = e.target.files[0]
+        if (file) {
+            $('#uploaded').hide();
+            $( "#preview" ).attr("src", URL.createObjectURL(file));
+            $('#delete-profile').show();
+            $( "#preview" ).show();
+            $('#hiddenInput').remove();
+        }
+    });
+    $('#delete-profile').on('click', function(e){
+        $('#uploaded').hide();
+        $( "#preview" ).hide();
+        $(this).hide();
+        $('#admin_user_profile_photo').val(null);
+        $("<input>").attr({ 
+            name: "admin_user[profile_photo]", 
+            id: "hiddenInput", 
+            type: "hidden",
+            value: null
+        }).appendTo("form#edit_admin_user"); 
+    });
+});
+<% end %>
