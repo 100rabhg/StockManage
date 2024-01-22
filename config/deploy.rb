@@ -2,7 +2,7 @@
 lock "~> 3.18.0"
 
 set :application, "StockManage"
-set :repo_url, "https://github.com/100rabhg/StockManage.git"
+set :repo_url, "git@github.com:100rabhg/StockManage.git"
 
 set :branch, :master
 set :use_sudo, false

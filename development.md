@@ -48,6 +48,14 @@
     rails db:migrate
     rails db:seed
 
+### Install redis for Active-Storage
+
+    # install
+    sudo apt install redis-server
+
+    # start server
+    redis-server
+
 ### Now run Server
 
     rails s
