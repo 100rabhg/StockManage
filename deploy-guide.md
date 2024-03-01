@@ -2,8 +2,8 @@
 
 we can use `rvm` or `rbenv` here using rbenv
 
-### require gem in development environment
-
+### require gem
+    gem 'net-ssh', '~>7.2', '>=7.2.1'
     gem 'capistrano'
     gem 'capistrano-bundler'
     gem 'capistrano-passenger', '>= 0.1.1'
@@ -11,7 +11,8 @@ we can use `rvm` or `rbenv` here using rbenv
     gem 'capistrano-rbenv'
 
 #### run this command 
-
+    
+    bundle install
     bundle exec cap install
 
 This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.rb`
@@ -33,20 +34,22 @@ This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.
    
     set :application, "[YOUR-APPLICATION-NAME]"
     set :repo_url, "git@github.com:[your-github-username]/[your-github-reponame].git"
-    set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
+    append :linked_files, "config/database.yml", 'config/master.key'
+    append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "storage"
     set :rbenv_ruby, '[your-ruby-version]'
     set :passenger_restart_with_touch, true
 
 ## Now EDIT `config/deploy/production.rb`
 
+    set :branch, :main
     server '[your_ec2_public_DNS]', user: '[instance_username]', roles: %w{web app db}
 
     set :ssh_options, {
-    keys: %w([absolute-path-to-your-ec2-key-pair-file]),
-    forward_agent: false,
-    auth_methods: %w(publickey password)
+       keys: %w([absolute-path-to-your-ec2-key-pair-file]),
+       forward_agent: true,
+       user: '[instance_username]'
+       auth_methods: %w(publickey password)
     }
-
 
 ## Now connect with your ec2 with SSH
     
@@ -73,6 +76,14 @@ This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.
 ## CREATE Deploy Directory
 
     mkdir [YOUR-APPLICATION-NAME]
+    cd [YOUR-APPLICATION-NAME]
+    mkdir shared/config
+    cat > master.key
+### Paste Your Credentials master key then press Ctrl+D
+    
+    cat > database.yml
+### Paste Your database yml with Credentials then press Ctrl+D
+
 
 ## Set up Github Credentials
 Run the following commands
@@ -167,7 +178,7 @@ Then, deploy your app from your local machine with the following:
     cat /var/log/nginx/error.log
 
 
-for more details <a herf="https://medium.com/@KerrySheldon/ec2-exercise-1-6-deploy-a-rails-app-to-an-ec2-instance-using-capistrano-3485238e4a4a">visit</a>
+for more details [visit](https://medium.com/@KerrySheldon/ec2-exercise-1-6-deploy-a-rails-app-to-an-ec2-instance-using-capistrano-3485238e4a4a)
 
 #
 
@@ -246,4 +257,4 @@ for more details <a herf="https://medium.com/@KerrySheldon/ec2-exercise-1-6-depl
 
     /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status
 
-for more details <a herf="https://copyprogramming.com/howto/shell-aws-cloudwatch-agent-ubuntu-code-example">visit</a>
+for more details [visit](https://copyprogramming.com/howto/shell-aws-cloudwatch-agent-ubuntu-code-example)
