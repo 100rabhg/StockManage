@@ -58,7 +58,7 @@ This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.
 
 ## Install
 
-* Rbnev
+* [Rbnev](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rbenv-on-ubuntu-20-04) OR [RVM](https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rvm-on-ubuntu-20-04)
 * ruby
 * rails
 * bundler
