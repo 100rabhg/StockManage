@@ -3,6 +3,7 @@
 we can use `rvm` or `rbenv` here using rbenv
 
 ### require gem
+
     gem 'net-ssh', '~>7.2', '>=7.2.1'
     gem 'capistrano'
     gem 'capistrano-bundler'
@@ -10,8 +11,8 @@ we can use `rvm` or `rbenv` here using rbenv
     gem 'capistrano-rails'
     gem 'capistrano-rbenv'
 
-#### run this command 
-    
+#### run this command
+
     bundle install
     bundle exec cap install
 
@@ -30,8 +31,8 @@ This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.
     require "capistrano/passenger"
     Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
 
-##  Now EDIT `config/deploy.rb`
-   
+## Now EDIT `config/deploy.rb`
+
     set :application, "[YOUR-APPLICATION-NAME]"
     set :repo_url, "git@github.com:[your-github-username]/[your-github-reponame].git"
     append :linked_files, "config/database.yml", 'config/master.key'
@@ -47,15 +48,16 @@ This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.
     set :ssh_options, {
        keys: %w([absolute-path-to-your-ec2-key-pair-file]),
        forward_agent: true,
-       user: '[instance_username]'
-       auth_methods: %w(publickey password)
+       user: '[instance_username]',
+       auth_methods: %w(publickey)
     }
 
 ## Now connect with your ec2 with SSH
-    
+
     `SSH -i [path-to-key-pair] unbuntu@[ec2-public-ip]`
 
-## Install 
+## Install
+
 * Rbnev
 * ruby
 * rails
@@ -79,13 +81,15 @@ This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.
     cd [YOUR-APPLICATION-NAME]
     mkdir shared/config
     cat > master.key
+
 ### Paste Your Credentials master key then press Ctrl+D
-    
+
     cat > database.yml
+
 ### Paste Your database yml with Credentials then press Ctrl+D
 
-
 ## Set up Github Credentials
+
 Run the following commands
 
     ssh-keygen -t rsa -C "[your-email-address]"
@@ -95,8 +99,8 @@ Run the following commands
 
 Take the output from the last command and <a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/"> add the SSH key to your Github account. </a>
 
-
 ## Setup Nginx
+
 Run the following command
 
     passenger-config about ruby-command
@@ -111,6 +115,7 @@ Run the following command
 Copy the value shown as the command to your clipboard, e.g.:  **/usr/local/rvm/gems/ruby-2.3.3/wrappers/ruby**
 
 ### EDIT sites-enabled file
+
 Run this command to edit
 
     sudo nano /etc/nginx/sites-enabled/default
@@ -159,8 +164,7 @@ Then, deploy your app from your local machine with the following:
 
     cap production deploy
 
-
-## Now give execute permission to nginx 
+## Now give execute permission to nginx
 
 **On ec2 instance execute this command**
 
@@ -169,14 +173,11 @@ Then, deploy your app from your local machine with the following:
     sudo chmod g+x,o+x /home/[username]/[YOUR-APPLICATION-NAME]/
     sudo chmod g+x,o+x /home/[username]/
 
-
 ## Now, Navigate to the public DNS address of your EC2 instance, and you should see your app
-
 
 ### If any issue run the command for log
 
     cat /var/log/nginx/error.log
-
 
 for more details [visit](https://medium.com/@KerrySheldon/ec2-exercise-1-6-deploy-a-rails-app-to-an-ec2-instance-using-capistrano-3485238e4a4a)
 
@@ -186,7 +187,7 @@ for more details [visit](https://medium.com/@KerrySheldon/ec2-exercise-1-6-deplo
 
 ### Create an IAM Policy
 
-1. Open the IAM console: https://console.aws.amazon.com/iam/
+1. Open the IAM console: <https://console.aws.amazon.com/iam/>
 
 2. In the navigation pane, choose Policies
 
@@ -222,7 +223,7 @@ for more details [visit](https://medium.com/@KerrySheldon/ec2-exercise-1-6-deplo
 
 ### Create an IAM Role
 
-1. Open the IAM console: https://console.aws.amazon.com/iam/
+1. Open the IAM console: <https://console.aws.amazon.com/iam/>
 2. In the navigation pane, choose Roles.
 3. Click on Create role
 4. Select EC2 from Common use cases
@@ -241,6 +242,7 @@ for more details [visit](https://medium.com/@KerrySheldon/ec2-exercise-1-6-deplo
 5. Set the IAM Role to EC2-CloudWatchLogs-Role
 
 ## CloadWatch-agent Setup on EC2
+
 #### Login in EC2 and run below cmd to setup agent for ubuntu
 
     # download cloudwatch-agent
