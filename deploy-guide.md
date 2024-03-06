@@ -33,8 +33,9 @@ This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.
 
 ## Now EDIT `config/deploy.rb`
 
-    set :application, "[YOUR-APPLICATION-NAME]"
+    set :application, '[YOUR-APPLICATION-NAME]'
     set :repo_url, "git@github.com:[your-github-username]/[your-github-reponame].git"
+    set :deploy_to, '/home/ubuntu/[YOUR-APPLICATION-NAME]'
     append :linked_files, "config/database.yml", 'config/master.key'
     append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "storage"
     set :rbenv_ruby, '[your-ruby-version]'
@@ -79,6 +80,7 @@ This will create `Capfile` and `config/deploy.rb` and `config/deploy/production.
 
     mkdir [YOUR-APPLICATION-NAME]
     cd [YOUR-APPLICATION-NAME]
+    mkdir shared
     mkdir shared/config
     cat > master.key
 
